@@ -1,8 +1,7 @@
 ﻿using Core.Entities;
-using Infrastructure.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System.Diagnostics.Metrics;
+using System.Reflection;
 
 namespace Infrastructure.Data
 {
@@ -19,6 +18,8 @@ namespace Infrastructure.Data
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductBrand> ProductBrands { get; set; }
+        public DbSet<ProductType> ProductTypes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -34,9 +35,8 @@ namespace Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(StoreContext).Assembly);
-
-            modelBuilder.SeedData();
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }
