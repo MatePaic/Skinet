@@ -10,6 +10,7 @@ namespace Infrastructure
         {
             services.AddDbContext<StoreContext>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             return services;
         }
