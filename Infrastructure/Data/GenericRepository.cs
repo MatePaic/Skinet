@@ -14,6 +14,11 @@ namespace Infrastructure.Data
             _context = context;
         }
 
+        private IQueryable<T> ApplySpecification(ISpecification<T> specification)
+        {
+            return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), specification); //pasing DbSet<T> and spec
+        }
+
         public async Task<IReadOnlyList<T>> GetAllAsync()
         {
             return await _context.Set<T>().ToListAsync();
@@ -34,9 +39,9 @@ namespace Infrastructure.Data
             return await ApplySpecification(specification).ToListAsync();
         }
 
-        private IQueryable<T> ApplySpecification(ISpecification<T> specification)
+        public async Task<int> CountAsync(ISpecification<T> specification)
         {
-            return SpecificationEvaluator<T>.GetQuery(_context.Set<T>().AsQueryable(), specification); //pasing DbSet<T> and spec
+            return await ApplySpecification(specification).CountAsync();
         }
     }
 }
