@@ -10,7 +10,7 @@ namespace Infrastructure.Data
         private readonly IConfiguration _configuration;
 
         public StoreContext(
-            DbContextOptions options,
+            DbContextOptions<StoreContext> options,
             IConfiguration configuration
         ) : base(options) 
         {
