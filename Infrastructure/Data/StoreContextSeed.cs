@@ -1,4 +1,5 @@
 ﻿using Core.Entities;
+using Core.Entities.OrderAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
@@ -35,6 +36,10 @@ namespace Infrastructure.Data
                 if (!await context.Products.AnyAsync())
                 {
                     await SaveDataAsync<Product>("../Infrastructure/Data/SeedData/products.json", context);
+                }
+                if (!await context.DeliveryMethods.AnyAsync())
+                {
+                    await SaveDataAsync<DeliveryMethod>("../Infrastructure/Data/SeedData/delivery.json", context);
                 }
             }
             catch (Exception ex)
